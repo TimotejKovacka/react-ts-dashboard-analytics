@@ -250,3 +250,16 @@ export const sidebarItems: {
   { label: "Login", icon: <LoginIcon /> },
   { label: "Logout", icon: <LogoutIcon /> },
 ];
+
+export const teams: Team[] = [
+  {
+    label: "Design Team",
+    iconColor: ProjectLabelColors.Yellow,
+    meetings: [],
+    projects: {
+      waiting: [],
+      inProgress: [],
+      completed: [],
+    },
+  },
+];

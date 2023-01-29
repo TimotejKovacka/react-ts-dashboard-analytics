@@ -92,16 +92,16 @@ export default function PrimarySearchAppBar(props: PrimarySearchAppBarProps) {
   const theme = useTheme();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar
-        position='fixed'
+        position="fixed"
         sx={{ ...props.sx, ...{ backgroundColor: "inherit" } }}
       >
         <Toolbar>
           <IconButton
-            size='large'
-            edge='start'
-            aria-label='open drawer'
+            size="large"
+            edge="start"
+            aria-label="open drawer"
             sx={{ mr: 2, color: theme.palette.gray.main }}
             onClick={props.handleToggleDrawer}
           >
@@ -118,7 +118,7 @@ export default function PrimarySearchAppBar(props: PrimarySearchAppBarProps) {
               <SearchIcon sx={{ color: theme.palette.gray.main }} />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder='Search'
+              placeholder="Search"
               inputProps={{ "aria-label": "search" }}
               sx={{
                 "& .MuiInputBase-input": { width: { md: "30ch", sm: "100%" } },
@@ -128,21 +128,21 @@ export default function PrimarySearchAppBar(props: PrimarySearchAppBarProps) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Stack
-            direction='row'
-            divider={<Divider orientation='vertical' flexItem />}
+            direction="row"
+            divider={<Divider orientation="vertical" flexItem />}
             sx={{ display: { xs: "none", md: "flex" } }}
           >
             <Box>
               <IconButton
-                size='large'
-                edge='end'
+                size="large"
+                edge="end"
                 sx={{ color: theme.palette.gray.main }}
               >
                 <NotificationsIcon />
               </IconButton>
               <IconButton
-                size='large'
-                edge='end'
+                size="large"
+                edge="end"
                 sx={{ color: theme.palette.gray.main }}
               >
                 <CalendarMonthIcon />
@@ -150,8 +150,8 @@ export default function PrimarySearchAppBar(props: PrimarySearchAppBarProps) {
             </Box>
             <Box>
               <IconButton
-                size='large'
-                edge='end'
+                size="large"
+                edge="end"
                 sx={{ color: theme.palette.gray.main }}
               >
                 <AccountCircleIcon />

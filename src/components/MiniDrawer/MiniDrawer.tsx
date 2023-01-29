@@ -109,8 +109,8 @@ export default function MiniDrawer(props: MiniDrawerProps) {
   return (
     <Box
       sx={{ display: "flex", backgroundColor: theme.palette.gray.light }}
-      width='100%'
-      minHeight='100vh'
+      width="100%"
+      minHeight="100vh"
     >
       <PrimarySearchAppBar
         handleToggleDrawer={handleToggleDrawer}
@@ -120,7 +120,7 @@ export default function MiniDrawer(props: MiniDrawerProps) {
         }}
       />
       <Drawer
-        variant='permanent'
+        variant="permanent"
         open={open}
         sx={{
           "& .MuiDrawer-paper": {
@@ -199,9 +199,21 @@ export default function MiniDrawer(props: MiniDrawerProps) {
           </List>
         </Paper>
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        {props.children}
+      <Box
+        component="main"
+        sx={{ display: "flex", flexFlow: "column", width: "100%" }}
+      >
+        <DrawerHeader sx={{ flex: "0 1 auto" }} />
+        <Box
+          sx={{
+            flex: "1 1 auto",
+            maxHeight: "calc(100vh - 64px)",
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
+          {props.children}
+        </Box>
       </Box>
     </Box>
   );
