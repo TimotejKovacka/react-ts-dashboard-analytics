@@ -57,7 +57,7 @@ export interface Team {
   iconColor: ProjectLabelColors;
   projects: {
     waiting: Project[] | [];
-    inProgress: Project[] | [];
+    in_progress: Project[] | [];
     completed: Project[] | [];
   };
   meetings: Meeting[] | [];
@@ -257,9 +257,9 @@ export const teams: Team[] = [
     iconColor: ProjectLabelColors.Yellow,
     meetings: [],
     projects: {
-      waiting: [],
-      inProgress: [],
       completed: [],
+      in_progress: [],
+      waiting: [],
     },
   },
 ];
