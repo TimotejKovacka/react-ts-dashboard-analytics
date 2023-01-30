@@ -15,31 +15,67 @@ export default function TeamCard(props: TeamCardProps) {
   const theme = useTheme();
   const [team, setTeam] = useState(teams[0]);
 
-  const teamProjectStats = [];
+  const teamProjectStats = [
+    {
+      label: "TOTAL",
+      value:
+        team.projects.completed.length +
+        team.projects.in_progress.length +
+        team.projects.waiting.length,
+      bgColor: "#ecf3ff",
+      pseudoColor: "#4e81e7",
+    },
+  ];
 
   for (const [key, value] of Object.entries(team.projects)) {
     const label = key.replace("_", " ").toUpperCase();
-    teamProjectStats.push({ label: label, projects: value });
+    switch (key) {
+      case "waiting":
+        teamProjectStats.push({
+          label: label,
+          value: value.length,
+          bgColor: "#f1ecff",
+          pseudoColor: "#7c5cce",
+        });
+        break;
+      case "in_progress":
+        teamProjectStats.push({
+          label: label,
+          value: value.length,
+          bgColor: "#feeeff",
+          pseudoColor: "#eb6ef0",
+        });
+        break;
+      case "completed":
+        teamProjectStats.push({
+          label: label,
+          value: value.length,
+          bgColor: "#ffefe2",
+          pseudoColor: "#de8a3a",
+        });
+        break;
+    }
   }
 
   return (
     <Box
       borderRadius={4}
+      p={1.5}
       sx={{ backgroundColor: "#fffffd" }}
-      height='100%'
-      display='flex'
-      flexDirection='column'
+      display="flex"
+      flexDirection="column"
     >
       <Box
         p={1.5}
+        mb={2}
         borderRadius={4}
         sx={{ backgroundColor: theme.palette.gray.light }}
-        display='flex'
-        alignItems='center'
+        display="flex"
+        alignItems="center"
       >
         <Box
           mr={3}
-          flex='1 0 auto'
+          flex="1 0 auto"
           sx={{
             [theme.breakpoints.between("md", "lg")]: {
               mr: 1,
@@ -53,7 +89,7 @@ export default function TeamCard(props: TeamCardProps) {
                 fontSize: "0.7rem",
               },
             }}
-            fontSize='0.85rem'
+            fontSize="0.85rem"
           >
             {"Selected".toUpperCase()}
           </Typography>
@@ -69,24 +105,17 @@ export default function TeamCard(props: TeamCardProps) {
           </Typography>
         </Box>
         <IconButton
-          aria-label='select team'
+          aria-label="select team"
           sx={{
             backgroundColor: team.iconColor,
             color: "#fff",
-            width: "48px",
-            [theme.breakpoints.between("md", "lg")]: {
-              width: "40px",
-            },
             ":hover": { backgroundColor: "inherit", color: team.iconColor },
           }}
         >
           <GroupsIcon />
         </IconButton>
       </Box>
-      <Box display={"flex"} justifyContent='center' position={"relative"}>
-        <div className='pro'>
-          <div />
-        </div>
+      <Box display={"flex"} justifyContent="center" position={"relative"}>
         <RadialBarChart
           data={[{ name: "Heheh", value: 75 }]}
           startAngle={90}
@@ -97,7 +126,7 @@ export default function TeamCard(props: TeamCardProps) {
           outerRadius={80}
         >
           <PolarAngleAxis
-            type='number'
+            type="number"
             domain={[0, 100]}
             angleAxisId={0}
             tick={false}
@@ -110,9 +139,9 @@ export default function TeamCard(props: TeamCardProps) {
           <text
             x={150 / 2}
             y={150 / 2}
-            textAnchor='middle'
-            dominantBaseline='middle'
-            className='progress-label'
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="progress-label"
             fontSize={"1.7rem"}
             fontWeight={900}
             fontFamily={"Roboto"}
@@ -121,54 +150,16 @@ export default function TeamCard(props: TeamCardProps) {
           </text>
         </RadialBarChart>
       </Box>
-      <Box m={2}>
-        <Typography variant='h6'>Projects</Typography>
-        <Grid
-          container
-          spacing={1}
-          sx={{
-            m: 0,
-            // "& .MuiGrid-item": { px: 1, py: 1.5 },
-          }}
-        >
-          <Grid
-            item
-            md={6}
-            sx={{ backgroundColor: "#ecf3ff", borderRadius: 4 }}
-          >
-            <Box px={1} py={1.5}>
-              <Typography
-                sx={{
-                  color: theme.palette.grey[700],
-                  [theme.breakpoints.between("md", "lg")]: {
-                    fontSize: "0.7rem",
-                  },
-                }}
-                fontSize='0.85rem'
-              >
-                {"total".toUpperCase()}
-              </Typography>
-              <Typography
-                fontWeight={"bold"}
-                sx={{
-                  [theme.breakpoints.between("md", "lg")]: {
-                    fontSize: "0.85rem",
-                  },
-                }}
-              >
-                {team.projects.completed.length +
-                  team.projects.in_progress.length +
-                  team.projects.waiting.length}
-              </Typography>
-            </Box>
-          </Grid>
+      <Box>
+        <Typography variant="h6">Projects</Typography>
+        <Grid container spacing={1}>
           {teamProjectStats.map((stat, index) => (
             <Grid item md={6} key={index}>
               <Box
                 px={1}
                 py={1.5}
                 sx={{
-                  backgroundColor: "#ecf3ff",
+                  backgroundColor: stat.bgColor,
                   borderRadius: 4,
                   [theme.breakpoints.between("md", "lg")]: {
                     width: 71,
@@ -182,19 +173,32 @@ export default function TeamCard(props: TeamCardProps) {
                       fontSize: "0.7rem",
                     },
                   }}
-                  fontSize='0.85rem'
+                  fontSize="0.85rem"
                 >
                   {stat.label}
                 </Typography>
                 <Typography
                   fontWeight={"bold"}
+                  fontSize="1.2rem"
                   sx={{
                     [theme.breakpoints.between("md", "lg")]: {
                       fontSize: "0.85rem",
                     },
+                    ml: 2,
+                    "&::after": {
+                      position: "absolute",
+                      borderRadius: "6px",
+                      content: '""',
+                      height: "20px",
+                      left: "-12px",
+                      top: "calc(50% - 10px)",
+                      width: "4px",
+                      background: stat.pseudoColor,
+                    },
                   }}
+                  position="relative"
                 >
-                  {stat.projects.length}
+                  {stat.value}
                 </Typography>
               </Box>
             </Grid>
