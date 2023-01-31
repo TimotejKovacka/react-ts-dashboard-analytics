@@ -6,7 +6,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import { v4 as uuidv4 } from "uuid";
 import { Dayjs } from "dayjs";
 
 export interface User {
@@ -25,15 +25,24 @@ export interface Task {
 }
 
 export enum ProjectLabelColors {
-  Blue = "#72a3f6",
-  Yellow = "#eb9c50",
-  Purple = "#a18cdc",
-  Pink = "#fa8bfc",
+  Blue = "#3c75e1",
+  Yellow = "#e08935",
+  Purple = "#785bc9",
+  Pink = "#dc72de",
+}
+
+export enum ProjectLabelBgColors {
+  Blue = "rgba(156, 191, 249, 0.3)",
+  Yellow = "rgba(241, 186, 133, 0.3)",
+  Purple = "rgba(189, 175, 231, 0.3)",
+  Pink = "rgba(252, 174, 253, 0.3)",
 }
 
 export interface Project {
+  id: string;
   label: string;
   labelColor: ProjectLabelColors;
+  labelBgColor: ProjectLabelBgColors;
   description: string[];
   tasks: Task[] | [];
   attachments: any[];
@@ -56,9 +65,11 @@ export interface Team {
   label: string;
   iconColor: ProjectLabelColors;
   projects: {
-    waiting: Project[] | [];
-    in_progress: Project[] | [];
-    completed: Project[] | [];
+    [key: string]: {
+      id: string;
+      label: string;
+      projectIds: string[] | [];
+    };
   };
   meetings: Meeting[] | [];
 }
@@ -90,10 +101,12 @@ export const users: User[] = [
   },
 ];
 
-export const projects: Project[] = [
-  {
+export const projects: { [key: string]: Project } = {
+  "6c1e6464-80ca-4aa9-923b-83a51a99aa55": {
+    id: "6c1e6464-80ca-4aa9-923b-83a51a99aa55",
     label: "Web Design",
     labelColor: ProjectLabelColors.Blue,
+    labelBgColor: ProjectLabelBgColors.Blue,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -107,9 +120,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "a254232c-e58c-4ef8-8507-a50739c14123": {
+    id: "a254232c-e58c-4ef8-8507-a50739c14123",
     label: "Mobile App",
     labelColor: ProjectLabelColors.Yellow,
+    labelBgColor: ProjectLabelBgColors.Yellow,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -123,9 +138,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "633d2d53-9764-414e-a9b3-26e98303e95e": {
+    id: "633d2d53-9764-414e-a9b3-26e98303e95e",
     label: "Dashboard",
     labelColor: ProjectLabelColors.Purple,
+    labelBgColor: ProjectLabelBgColors.Purple,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -139,9 +156,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "8933e680-934f-4def-8e7c-941a49014065": {
+    id: "8933e680-934f-4def-8e7c-941a49014065",
     label: "App Development",
     labelColor: ProjectLabelColors.Pink,
+    labelBgColor: ProjectLabelBgColors.Pink,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -155,9 +174,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "e0656717-9451-4d1b-99be-36e9125532d0": {
+    id: "e0656717-9451-4d1b-99be-36e9125532d0",
     label: "Dashboard",
     labelColor: ProjectLabelColors.Purple,
+    labelBgColor: ProjectLabelBgColors.Purple,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -171,9 +192,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "7557cdbc-ab15-4ead-9165-e48face96396": {
+    id: "7557cdbc-ab15-4ead-9165-e48face96396",
     label: "Landing Page",
     labelColor: ProjectLabelColors.Blue,
+    labelBgColor: ProjectLabelBgColors.Blue,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -187,9 +210,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "9c13222b-da6d-4dd9-ac0e-d2efd470711c": {
+    id: "9c13222b-da6d-4dd9-ac0e-d2efd470711c",
     label: "Mobile App",
     labelColor: ProjectLabelColors.Yellow,
+    labelBgColor: ProjectLabelBgColors.Yellow,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -203,9 +228,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "70794059-4b4a-48cd-bfe4-52cacba26311": {
+    id: "70794059-4b4a-48cd-bfe4-52cacba26311",
     label: "Web Development",
     labelColor: ProjectLabelColors.Blue,
+    labelBgColor: ProjectLabelBgColors.Blue,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -219,9 +246,11 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-  {
+  "a00566ae-3942-4554-af35-180934a7fb8a": {
+    id: "a00566ae-3942-4554-af35-180934a7fb8a",
     label: "App Development",
     labelColor: ProjectLabelColors.Pink,
+    labelBgColor: ProjectLabelBgColors.Pink,
     description: ["Wireframing", "mockups", "clients collaboration"],
     tasks: [
       {
@@ -235,7 +264,7 @@ export const projects: Project[] = [
     comments: [],
     attachments: [],
   },
-];
+};
 
 export const sidebarItems: {
   label: string;
@@ -257,9 +286,33 @@ export const teams: Team[] = [
     iconColor: ProjectLabelColors.Yellow,
     meetings: [],
     projects: {
-      completed: [],
-      in_progress: [],
-      waiting: [],
+      completed: {
+        id: uuidv4(),
+        label: "completed",
+        projectIds: [
+          "a00566ae-3942-4554-af35-180934a7fb8a",
+          "70794059-4b4a-48cd-bfe4-52cacba26311",
+          "9c13222b-da6d-4dd9-ac0e-d2efd470711c",
+        ],
+      },
+      in_progress: {
+        id: uuidv4(),
+        label: "in progress",
+        projectIds: [
+          "7557cdbc-ab15-4ead-9165-e48face96396",
+          "e0656717-9451-4d1b-99be-36e9125532d0",
+          "8933e680-934f-4def-8e7c-941a49014065",
+        ],
+      },
+      waiting: {
+        id: uuidv4(),
+        label: "waiting",
+        projectIds: [
+          "633d2d53-9764-414e-a9b3-26e98303e95e",
+          "a254232c-e58c-4ef8-8507-a50739c14123",
+          "6c1e6464-80ca-4aa9-923b-83a51a99aa55",
+        ],
+      },
     },
   },
 ];

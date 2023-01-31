@@ -19,21 +19,21 @@ export default function TeamCard(props: TeamCardProps) {
     {
       label: "TOTAL",
       value:
-        team.projects.completed.length +
-        team.projects.in_progress.length +
-        team.projects.waiting.length,
+        team.projects.completed.projectIds.length +
+        team.projects.in_progress.projectIds.length +
+        team.projects.waiting.projectIds.length,
       bgColor: "#ecf3ff",
       pseudoColor: "#4e81e7",
     },
   ];
 
   for (const [key, value] of Object.entries(team.projects)) {
-    const label = key.replace("_", " ").toUpperCase();
+    const label = value.label.toUpperCase();
     switch (key) {
       case "waiting":
         teamProjectStats.push({
           label: label,
-          value: value.length,
+          value: value.projectIds.length,
           bgColor: "#f1ecff",
           pseudoColor: "#7c5cce",
         });
@@ -41,7 +41,7 @@ export default function TeamCard(props: TeamCardProps) {
       case "in_progress":
         teamProjectStats.push({
           label: label,
-          value: value.length,
+          value: value.projectIds.length,
           bgColor: "#feeeff",
           pseudoColor: "#eb6ef0",
         });
@@ -49,7 +49,7 @@ export default function TeamCard(props: TeamCardProps) {
       case "completed":
         teamProjectStats.push({
           label: label,
-          value: value.length,
+          value: value.projectIds.length,
           bgColor: "#ffefe2",
           pseudoColor: "#de8a3a",
         });
@@ -62,20 +62,20 @@ export default function TeamCard(props: TeamCardProps) {
       borderRadius={4}
       p={1.5}
       sx={{ backgroundColor: "#fffffd" }}
-      display="flex"
-      flexDirection="column"
+      display='flex'
+      flexDirection='column'
     >
       <Box
         p={1.5}
         mb={2}
         borderRadius={4}
         sx={{ backgroundColor: theme.palette.gray.light }}
-        display="flex"
-        alignItems="center"
+        display='flex'
+        alignItems='center'
       >
         <Box
           mr={3}
-          flex="1 0 auto"
+          flex='1 0 auto'
           sx={{
             [theme.breakpoints.between("md", "lg")]: {
               mr: 1,
@@ -89,7 +89,7 @@ export default function TeamCard(props: TeamCardProps) {
                 fontSize: "0.7rem",
               },
             }}
-            fontSize="0.85rem"
+            fontSize='0.85rem'
           >
             {"Selected".toUpperCase()}
           </Typography>
@@ -105,7 +105,7 @@ export default function TeamCard(props: TeamCardProps) {
           </Typography>
         </Box>
         <IconButton
-          aria-label="select team"
+          aria-label='select team'
           sx={{
             backgroundColor: team.iconColor,
             color: "#fff",
@@ -115,7 +115,7 @@ export default function TeamCard(props: TeamCardProps) {
           <GroupsIcon />
         </IconButton>
       </Box>
-      <Box display={"flex"} justifyContent="center" position={"relative"}>
+      <Box display={"flex"} justifyContent='center' position={"relative"}>
         <RadialBarChart
           data={[{ name: "Heheh", value: 75 }]}
           startAngle={90}
@@ -126,7 +126,7 @@ export default function TeamCard(props: TeamCardProps) {
           outerRadius={80}
         >
           <PolarAngleAxis
-            type="number"
+            type='number'
             domain={[0, 100]}
             angleAxisId={0}
             tick={false}
@@ -139,9 +139,9 @@ export default function TeamCard(props: TeamCardProps) {
           <text
             x={150 / 2}
             y={150 / 2}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className="progress-label"
+            textAnchor='middle'
+            dominantBaseline='middle'
+            className='progress-label'
             fontSize={"1.7rem"}
             fontWeight={900}
             fontFamily={"Roboto"}
@@ -151,7 +151,7 @@ export default function TeamCard(props: TeamCardProps) {
         </RadialBarChart>
       </Box>
       <Box>
-        <Typography variant="h6">Projects</Typography>
+        <Typography variant='h6'>Projects</Typography>
         <Grid container spacing={1}>
           {teamProjectStats.map((stat, index) => (
             <Grid item md={6} key={index}>
@@ -173,13 +173,13 @@ export default function TeamCard(props: TeamCardProps) {
                       fontSize: "0.7rem",
                     },
                   }}
-                  fontSize="0.85rem"
+                  fontSize='0.85rem'
                 >
                   {stat.label}
                 </Typography>
                 <Typography
                   fontWeight={"bold"}
-                  fontSize="1.2rem"
+                  fontSize='1.2rem'
                   sx={{
                     [theme.breakpoints.between("md", "lg")]: {
                       fontSize: "0.85rem",
@@ -196,7 +196,7 @@ export default function TeamCard(props: TeamCardProps) {
                       background: stat.pseudoColor,
                     },
                   }}
-                  position="relative"
+                  position='relative'
                 >
                   {stat.value}
                 </Typography>
